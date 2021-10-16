@@ -24,8 +24,6 @@ const variables = {
         ],
         datePickerType: 'calendar',
         placeId: 'ChIJKYOZ6mqKJQ0RkBjLc4L1BAQ',
-        checkin: '2021-11-15',
-        checkout: '2021-11-22',
         source: 'structured_search_input_header',
         searchType: 'autocomplete_click',
         // federatedSearchSessionId: '7b2e3150-3f40-413b-bde3-2a2a1de09b95',
@@ -65,25 +63,30 @@ const parseResults = results => {
         .section
         .items
 
+    if (!items) {
+        return []
+    }
+
     const properties = items
         .map(item => ({
             name: item.listing.name,
             lat: item.listing.lat,
             lng: item.listing.lng,
             id: item.listing.id,
-            pricing: item.pricingQuote.price.priceItems,
+            pricing: item.pricingQuote.price.priceItems
+                .find(item => item.lineItemType === 2)
+                .total.amount,
         }))
         .sort((a, b) => a.name.localeCompare(b.name))
-
-        console.log('properties:')
-        console.log(properties)
     return properties || []
 }
 
-const handler = async function () {
+const handler = async event => {
     const maxPages = 2
     const properties = []
     let page = 0
+
+    const { checkin, checkout } = event.queryStringParameters
 
     do {
         const itemsOffset = variables.exploreRequest.itemsPerGrid * page
@@ -96,6 +99,8 @@ const handler = async function () {
             ...variables,
             exploreRequest: {
                 ...variables.exploreRequest,
+                checkin,
+                checkout,
                 itemsOffset,
             }
         }))
