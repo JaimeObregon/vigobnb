@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/JaimeObregon/vigobnb/issues"
   },
-  "homepage": "https://github.com/JaimeObregon/vigobnb#readme"
+  "homepage": "https://github.com/JaimeObregon/vigobnb#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.5"
+  }
 }
