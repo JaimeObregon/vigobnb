@@ -1,0 +1,20 @@
+{
+  "name": "vigobnb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx web-dev-server -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaimeObregon/vigobnb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JaimeObregon/vigobnb/issues"
+  },
+  "homepage": "https://github.com/JaimeObregon/vigobnb#readme"
+}
