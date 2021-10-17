@@ -25,7 +25,14 @@ const variables = {
         datePickerType: 'calendar',
         placeId: 'ChIJKYOZ6mqKJQ0RkBjLc4L1BAQ',
         source: 'structured_search_input_header',
-        searchType: 'autocomplete_click',
+        searchType: 'filter_change',
+        adults: 1,
+        propertyTypeId: [
+            1, // "Apartamento"
+        ],
+        roomTypes: [
+            'Entire home/apt', // "Alojamiento entero"
+        ],
         // federatedSearchSessionId: '7b2e3150-3f40-413b-bde3-2a2a1de09b95',
         // itemsOffset: 0,
         // sectionOffset: 2,
@@ -69,20 +76,25 @@ const parseResults = results => {
 
     const properties = items
         .map(item => ({
-            name: item.listing.name,
-            lat: item.listing.lat,
-            lng: item.listing.lng,
             id: item.listing.id,
-            pricing: item.pricingQuote.price.priceItems
+            price: item.pricingQuote.price.priceItems
                 .find(item => item.lineItemType === 2)
                 .total.amount,
+            name: item.listing.name,
+            rating: item.listing.avgRating,
+            superhost: item.listing.isSuperhost,
+            new: item.listing.isNewListing,
+            capacity: item.listing.personCapacity,
+            reviews: item.listing.reviewsCount,
+            details: item.listing.homeDetails
+                .filter(detail => detail.__typename === 'BasicListItem')
+                .map(detail => detail.title)
         }))
-        .sort((a, b) => a.name.localeCompare(b.name))
     return properties || []
 }
 
 const handler = async event => {
-    const maxPages = 2
+    const maxPages = 10
     const properties = []
     let page = 0
 
