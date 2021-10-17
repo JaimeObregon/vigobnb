@@ -1,6 +1,5 @@
 :root {
-    --nav-width: 16rem;
-    --nav-width: 0;
+    --nav-width: 20rem;
 }
 
 html {
@@ -30,11 +29,56 @@ bx-loading {
 }
 
 bx-side-nav {
+    box-sizing: border-box;
     width: var(--nav-width);
+    max-width: var(--nav-width);
+    padding: 0 1rem;
+}
+
+bx-side-nav > img {
+    padding: 1em 4em;
+}
+
+bx-side-nav > * {
+    margin: 1rem 0;
 }
 
 bx-table-cell.price {
     text-align: right;
+}
+
+bx-table-cell.name {
+    display: flex;
+    padding: 0;
+    align-items: center;
+}
+
+bx-table-cell.name img {
+    margin-right: 1em;
+    width: 5em;
+    height: 100%;
+    object-fit: cover;
+}
+
+bx-table-cell.name a {
+    font-weight: 800;
+    color: inherit;
+}
+
+bx-table-cell ul {
+    font-size: .85em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+bx-table-cell ul li {
+    display: inline;
+}
+
+bx-table-cell ul li:not(:last-of-type):after {
+    content: '·';
+    margin: 0 .25em;
 }
 
 @supports (font-variation-settings: normal) {

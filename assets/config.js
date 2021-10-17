@@ -1,12 +1,22 @@
 export const config = {
     columns: [
         {
-            id: 'id',
-            title: 'id',
-            template: property => `<code>${property.id}</code>`,
+            id: 'name',
+            title: 'Descripción',
+            template: property => `
+                <img src="${property.pictures[0]}" alt="" />
+                <div>
+                    <a href="https://www.airbnb.es/rooms/${property.id}">
+                        ${property.name}
+                    </a>
+                    <ul>
+                        ${property.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                </div>
+                `,
             sort: {
-                ascending: (a, b) => a['id'] - b['id'],
-                descending: (a, b) => b['id'] - a['id'],
+                ascending: (a, b) => a['name'].localeCompare(b['name']),
+                descending: (a, b) => b['name'].localeCompare(a['name']),
             },
         },
         {
@@ -16,22 +26,6 @@ export const config = {
             sort: {
                 ascending: (a, b) => a['price'] - b['price'],
                 descending: (a, b) => b['price'] - a['price'],
-            },
-        },
-        {
-            id: 'name',
-            title: 'Descripción',
-            template: property => `
-                ${property.superhost ? '[Superhost]' : ''}
-                <a href="https://www.airbnb.es/rooms/${property.id}">
-                    ${property.name}
-                </a>
-                <br>
-                ${property.details.join(' · ')}
-                `,
-            sort: {
-                ascending: (a, b) => a['name'].localeCompare(b['name']),
-                descending: (a, b) => b['name'].localeCompare(a['name']),
             },
         },
         {
@@ -45,7 +39,7 @@ export const config = {
         },
         {
             id: 'capacity',
-            title: 'Huéspedes',
+            title: 'Capacidad',
             template: property => property.capacity,
             sort: {
                 ascending: (a, b) => a['capacity'] - b['capacity'],

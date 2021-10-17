@@ -29,9 +29,21 @@ const variables = {
         adults: 1,
         propertyTypeId: [
             1, // "Apartamento"
+            // 2, // "Casa"
+            // 4, // "Cabaña"
+            // 11, // "Villa"
+            // 22, // "Chalet"
+            // 35, // "Loft"
+            // 36, // "Adosado"
+            // 37, // "Apto. en complejo residencial"
+            // 40, // "Casa de invitados"
+            // 47, // "Apartamento con servicios"
+            // 53, // "Suite con entrada independiente"
+            // 60, // "Casa rural"
         ],
         roomTypes: [
             'Entire home/apt', // "Alojamiento entero"
+            // 'Private room', // "Habitación privada"
         ],
         // federatedSearchSessionId: '7b2e3150-3f40-413b-bde3-2a2a1de09b95',
         // itemsOffset: 0,
@@ -88,13 +100,16 @@ const parseResults = results => {
             reviews: item.listing.reviewsCount,
             details: item.listing.homeDetails
                 .filter(detail => detail.__typename === 'BasicListItem')
-                .map(detail => detail.title)
+                .map(detail => detail.title),
+            pictures: item.listing.contextualPictures
+                .filter(picture => picture.__typename === 'ExplorePicture')
+                .map(picture => picture.picture),
         }))
     return properties || []
 }
 
 const handler = async event => {
-    const maxPages = 10
+    const maxPages = 25
     const properties = []
     let page = 0
 
