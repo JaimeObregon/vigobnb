@@ -50,15 +50,18 @@ bx-table-cell.price {
 
 bx-table-cell.name {
     display: flex;
-    padding: 0;
-    align-items: center;
 }
 
 bx-table-cell.name img {
-    margin-right: 1em;
-    width: 5em;
-    height: 100%;
+    margin: -1em 1em -1em 0;
+    width: 9em;
+    height: 6em;
     object-fit: cover;
+    flex-shrink: 0;
+}
+
+bx-table[hideimages] bx-table-cell.name img {
+    display: none;
 }
 
 bx-table-cell.name a {
@@ -80,6 +83,10 @@ bx-table-cell ul li {
 bx-table-cell ul li:not(:last-of-type):after {
     content: '·';
     margin: 0 .25em;
+}
+
+div.empty {
+    margin: 5em;
 }
 
 @supports (font-variation-settings: normal) {

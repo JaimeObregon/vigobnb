@@ -26,21 +26,6 @@ const variables = {
         placeId: 'ChIJKYOZ6mqKJQ0RkBjLc4L1BAQ',
         source: 'structured_search_input_header',
         searchType: 'filter_change',
-        adults: 1,
-        propertyTypeId: [
-            1, // "Apartamento"
-            // 2, // "Casa"
-            // 4, // "Cabaña"
-            // 11, // "Villa"
-            // 22, // "Chalet"
-            // 35, // "Loft"
-            // 36, // "Adosado"
-            // 37, // "Apto. en complejo residencial"
-            // 40, // "Casa de invitados"
-            // 47, // "Apartamento con servicios"
-            // 53, // "Suite con entrada independiente"
-            // 60, // "Casa rural"
-        ],
         roomTypes: [
             'Entire home/apt', // "Alojamiento entero"
             // 'Private room', // "Habitación privada"
@@ -109,11 +94,16 @@ const parseResults = results => {
 }
 
 const handler = async event => {
-    const maxPages = 25
+    const maxPages = 6 // 25
     const properties = []
     let page = 0
 
-    const { checkin, checkout } = event.queryStringParameters
+    const {
+        checkin,
+        checkout,
+        adults,
+        propertyTypeId,
+    } = event.queryStringParameters
 
     do {
         const itemsOffset = variables.exploreRequest.itemsPerGrid * page
@@ -128,6 +118,8 @@ const handler = async event => {
                 ...variables.exploreRequest,
                 checkin,
                 checkout,
+                adults: Number(adults),
+                propertyTypeId: [...propertyTypeId.split(',').map(id => Number(id))],
                 itemsOffset,
             }
         }))
@@ -135,11 +127,15 @@ const handler = async event => {
 
         const url = `${endpoint}?` + params.toString()
 
+        console.log(url)
+
         const response = await fetch(url, {
             headers: {
                 'X-Airbnb-API-Key': 'd306zoyjsyarp7ifhu67rjxn52tv0t20',
             },
         })
+
+        console.log(response)
 
         if (!response.ok) {
             return {
@@ -149,6 +145,8 @@ const handler = async event => {
         }
 
         const results = await response.json()
+
+        console.log(results)
 
         const items = parseResults(results)
         if (!items.length) {

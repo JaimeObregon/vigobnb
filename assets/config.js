@@ -1,4 +1,54 @@
 export const config = {
+    propertyTypes: [
+        {
+            id: 36,
+            name: 'Adosado',
+        },
+        {
+            id: 47,
+            name: 'Apartamento con servicios',
+        },
+        {
+            id: 37,
+            name: 'Apartamento en complejo residencial',
+        },
+        {
+            id: 1,
+            name: 'Apartamento',
+        },
+        {
+            id: 4,
+            name: 'Cabaña',
+        },
+        {
+            id: 40,
+            name: 'Casa de invitados',
+        },
+        {
+            id: 60,
+            name: 'Casa rural',
+        },
+        {
+            id: 2,
+            name: 'Casa',
+        },
+        {
+            id: 22,
+            name: 'Chalet',
+        },
+        {
+            id: 35,
+            name: 'Loft',
+        },
+        {
+            id: 53,
+            name: 'Suite con entrada independiente',
+        },
+        {
+            id: 11,
+            name: 'Villa',
+        },
+    ],
     columns: [
         {
             id: 'name',
