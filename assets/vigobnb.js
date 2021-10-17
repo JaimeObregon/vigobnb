@@ -24,8 +24,8 @@ document.body.innerHTML = `
         </bx-number-input>
 
         <bx-toggle>
-            <span slot="checked-text">Solo superanfitriones</span>
-            <span slot="unchecked-text">Todos los anfitriones</span>
+            <span slot="checked-text">Mostrar fotografía</span>
+            <span slot="unchecked-text">Ocultar fotografía</span>
         </bx-toggle>
     </bx-side-nav>
     <bx-data-table>

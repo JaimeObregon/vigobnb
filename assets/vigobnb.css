@@ -36,7 +36,8 @@ bx-side-nav {
 }
 
 bx-side-nav > img {
-    padding: 1em 4em;
+    width: 60%;
+    margin: 2em auto;
 }
 
 bx-side-nav > * {
