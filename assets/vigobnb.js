@@ -85,9 +85,13 @@ const refresh = debounce(350, async () => {
                 `).join('')}
             </bx-table-expand-row>
             <bx-table-expanded-row colspan="${columns.length + 1}">
-                <code>${property.id}</code>
-                ${property.pictures.map(picture => `<img src="${picture}" alt="" style="height: 5rem" />`).join('')}
-                ${property.superhost ? 'Superanfitrión' : 'No es superanfitrión'}
+                <pre style="width: calc(100vw - var(--nav-width) - 2.5em); overflow: scroll">${JSON.stringify({
+                    id: property.id,
+                    superhost: property.superhost,
+                    new: property.new,
+                    pictures: property.pictures,
+                    quote: property.quote,
+                }, null, 4)}</pre>
             </bx-table-expanded-row>
         `)
         .join('')
@@ -106,6 +110,10 @@ document.body.innerHTML = `
             </bx-date-picker-input>
         </bx-date-picker>
 
+        <bx-number-input value="${defaults.adults}" placeholder="Optional placeholder text" min="1" max="20" type="text">
+            <span slot="label-text">Huéspedes</span>
+        </bx-number-input>
+
         <bx-multi-select value="${defaults.propertyTypes}" label-text="Tipo de alojamiento" trigger-content="Selecciona tipos">
             ${config.propertyTypes
                 .map(type => `
@@ -114,10 +122,6 @@ document.body.innerHTML = `
                     </bx-multi-select-item>
                 `).join('')}
         </bx-multi-select>
-
-        <bx-number-input value="${defaults.adults}" placeholder="Optional placeholder text" min="1" max="20" type="text">
-            <span slot="label-text">Huéspedes</span>
-        </bx-number-input>
 
         <bx-toggle ${defaults.compact ? '' : 'checked=""'}>
             <span slot="checked-text">Mostrar fotografías</span>

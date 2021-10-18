@@ -76,19 +76,18 @@ const parseResults = results => {
 
     const properties = items
         .map(item => ({
-            id: item.listing.id,
-            price: item.pricingQuote.price.priceItems
-                .find(item => item.lineItemType === 2)
-                .total.amount,
             name: item.listing.name,
             rating: item.listing.avgRating,
-            superhost: item.listing.isSuperhost,
-            new: item.listing.isNewListing,
             capacity: item.listing.personCapacity,
             reviews: item.listing.reviewsCount,
             details: item.listing.homeDetails
                 .filter(detail => detail.__typename === 'BasicListItem')
                 .map(detail => detail.title),
+            price: item.pricingQuote.rate.amount,
+            id: item.listing.id,
+            quote: item.pricingQuote,
+            superhost: item.listing.isSuperhost,
+            new: item.listing.isNewListing,
             pictures: item.listing.contextualPictures
                 .filter(picture => picture.__typename === 'ExplorePicture')
                 .map(picture => picture.picture),

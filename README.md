@@ -2,6 +2,13 @@
 
 https://vigobnb.netlify.app
 
+## TODO
+
+- el problema de las fechas
+- el desplegable
+- exclusión de propiedades
+- exportar a excel
+
 ## Ejemplo de parte de una respuesta de la API de Airbnb
 
 {
