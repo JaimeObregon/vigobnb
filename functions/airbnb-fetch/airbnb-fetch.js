@@ -31,7 +31,6 @@ const variables = {
             // 'Private room', // "Habitación privada"
         ],
         // federatedSearchSessionId: '7b2e3150-3f40-413b-bde3-2a2a1de09b95',
-        // itemsOffset: 0,
         // sectionOffset: 2,
         query: 'Vigo, Pontevedra',
         cdnCacheSafe: false,

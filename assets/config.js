@@ -1,10 +1,6 @@
 export const config = {
     propertyTypes: [
         {
-            id: 36,
-            name: 'Adosado',
-        },
-        {
             id: 47,
             name: 'Apartamento con servicios',
         },
@@ -17,41 +13,46 @@ export const config = {
             name: 'Apartamento',
         },
         {
-            id: 4,
-            name: 'Cabaña',
-        },
-        {
-            id: 40,
-            name: 'Casa de invitados',
-        },
-        {
-            id: 60,
-            name: 'Casa rural',
-        },
-        {
-            id: 2,
-            name: 'Casa',
-        },
-        {
-            id: 22,
-            name: 'Chalet',
-        },
-        {
             id: 35,
             name: 'Loft',
         },
-        {
-            id: 53,
-            name: 'Suite con entrada independiente',
-        },
-        {
-            id: 11,
-            name: 'Villa',
-        },
+        // {
+        //     id: 36,
+        //     name: 'Adosado',
+        // },
+        // {
+        //     id: 4,
+        //     name: 'Cabaña',
+        // },
+        // {
+        //     id: 40,
+        //     name: 'Casa de invitados',
+        // },
+        // {
+        //     id: 60,
+        //     name: 'Casa rural',
+        // },
+        // {
+        //     id: 2,
+        //     name: 'Casa',
+        // },
+        // {
+        //     id: 22,
+        //     name: 'Chalet',
+        // },
+        // {
+        //     id: 53,
+        //     name: 'Suite con entrada independiente',
+        // },
+        // {
+        //     id: 11,
+        //     name: 'Villa',
+        // },
     ],
     columns: [
         {
             id: 'name',
+            class: 'details',
             title: 'Descripción',
             template: property => `
                 <img src="${property.pictures[0]}" alt="" />
@@ -71,7 +72,8 @@ export const config = {
         },
         {
             id: 'price',
-            title: 'Precio por noche',
+            class: 'number price',
+            title: 'Precio',
             template: property => `${property.price} €`,
             sort: {
                 ascending: (a, b) => a['price'] - b['price'],
@@ -80,7 +82,8 @@ export const config = {
         },
         {
             id: 'rating',
-            title: 'Valoración media',
+            class: 'number',
+            title: 'Valoración',
             template: property => property.rating ? property.rating.toLocaleString('es-ES') : '',
             sort: {
                 ascending: (a, b) => a['rating'] - b['rating'],
@@ -89,6 +92,7 @@ export const config = {
         },
         {
             id: 'capacity',
+            class: 'number',
             title: 'Capacidad',
             template: property => property.capacity,
             sort: {
@@ -98,6 +102,7 @@ export const config = {
         },
         {
             id: 'reviews',
+            class: 'number',
             title: 'Reseñas',
             template: property => property.reviews,
             sort: {

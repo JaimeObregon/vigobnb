@@ -1,5 +1,9 @@
 # vigobnb
 
+https://vigobnb.netlify.app
+
+## Ejemplo de parte de una respuesta de la API de Airbnb
+
 {
     "items": [
         {
