@@ -54,6 +54,11 @@ bx-table[compact] bx-table-cell.details img {
 bx-table-cell.details a {
     font-weight: 800;
     color: inherit;
+    text-decoration: none;
+}
+
+bx-table-cell.details a:hover {
+    text-decoration: underline;
 }
 
 bx-table-cell.details ul {
@@ -114,6 +119,20 @@ div.empty {
 
 div.empty img {
     width: 12em;
+}
+
+button {
+    padding: 1em;
+    background: none;
+    outline: none;
+    border: none;
+    width: 6em;
+    margin: auto;
+    cursor: pointer;
+}
+
+button svg {
+    width: 5em;
 }
 
 @supports (font-variation-settings: normal) {

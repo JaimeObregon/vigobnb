@@ -110,5 +110,15 @@ export const config = {
                 descending: (a, b) => b['reviews'] - a['reviews'],
             },
         },
+        {
+            id: 'id',
+            class: 'id',
+            title: 'id',
+            template: property => `<code>${property.id}</code>`,
+            sort: {
+                ascending: (a, b) => a['id'] - b['id'],
+                descending: (a, b) => b['id'] - a['id'],
+            },
+        },
     ],
 }
