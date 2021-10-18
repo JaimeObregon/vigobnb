@@ -2,6 +2,10 @@ const fetch = require('node-fetch')
 
 const endpoint = 'https://www.airbnb.es/api/v3/ExploreSections'
 
+const headers = {
+    'X-Airbnb-API-Key': 'd306zoyjsyarp7ifhu67rjxn52tv0t20',
+}
+
 const variables = {
     isInitialLoad: true,
     hasLoggedIn: false,
@@ -89,11 +93,12 @@ const parseResults = results => {
                 .filter(picture => picture.__typename === 'ExplorePicture')
                 .map(picture => picture.picture),
         }))
+
     return properties || []
 }
 
 const handler = async event => {
-    const maxPages = 6 // 25
+    const maxPages = 8 // Hay un máximo de 400 apartamentos y los obtenemos en páginas de 50
     const properties = []
     let page = 0
 
@@ -115,10 +120,10 @@ const handler = async event => {
             ...variables,
             exploreRequest: {
                 ...variables.exploreRequest,
-                checkin,
-                checkout,
                 adults: Number(adults),
                 propertyTypeId: [...propertyTypeId.split(',').map(id => Number(id))],
+                checkin,
+                checkout,
                 itemsOffset,
             }
         }))
@@ -126,16 +131,7 @@ const handler = async event => {
 
         const url = `${endpoint}?` + params.toString()
 
-        console.log(url)
-
-        const response = await fetch(url, {
-            headers: {
-                'X-Airbnb-API-Key': 'd306zoyjsyarp7ifhu67rjxn52tv0t20',
-            },
-        })
-
-        console.log(response)
-
+        const response = await fetch(url, { headers })
         if (!response.ok) {
             return {
                 statusCode: response.status,
@@ -144,8 +140,6 @@ const handler = async event => {
         }
 
         const results = await response.json()
-
-        console.log(results)
 
         const items = parseResults(results)
         if (!items.length) {

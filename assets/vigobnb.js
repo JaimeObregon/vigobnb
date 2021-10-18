@@ -21,6 +21,15 @@ const defaults = {
     compact: true,
 }
 
+const error = message => `
+    <bx-table-expanded-row colspan="${columns.length + 1}" expanded>
+        <div class="empty">
+            <img src="/assets/ooops.svg" alt="Ooops!!!" />
+            ${message}
+        </div>
+    </bx-table-expanded-row>
+`
+
 const refresh = debounce(350, async () => {
     table.innerHTML = [...Array(5)].map(row => `
         <bx-table-expand-row>
@@ -38,24 +47,27 @@ const refresh = debounce(350, async () => {
     const response = await fetch(`/.netlify/functions/airbnb-fetch?${query}`)
 
     if (!response.ok) {
-        // ...
+        table.innerHTML = error(`
+            <h1>No se pudo conectar con el servidor</h1>
+            <p>
+                Algo ha salido mal y no ha sido posible conectar<br>
+                con el servidor o con la API de Airbnb.<br>
+                Prueba a intentarlo de nuevo.
+            </p>
+        `)
+        return
     }
 
     const json = await response.json()
 
     if (!json.length) {
-        table.innerHTML = `
-            <bx-table-expanded-row colspan="${columns.length + 1}" expanded>
-                <div class="empty">
-                    <img src="/assets/ooops.svg" alt="Ooops!!!" />
-                    <h1>No hay resultados</h1>
-                    <p>
-                        Parece que no hay propiedades para tu búsqueda.<br>
-                        Prueba con otras fechas o cambiando los filtros.
-                    </p>
-                </div>
-            </bx-table-expanded-row>
-        `
+        table.innerHTML = error(`
+            <h1>No hay resultados</h1>
+            <p>
+                Parece que no hay propiedades para tu búsqueda.<br>
+                Prueba con otras fechas o cambiando los filtros.
+            </p>
+        `)
         return
     }
 
