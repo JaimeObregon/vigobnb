@@ -84,6 +84,7 @@ const parseResults = results => {
                 .filter(detail => detail.__typename === 'BasicListItem')
                 .map(detail => detail.title),
             price: item.pricingQuote.rate.amount,
+            total: item.pricingQuote.price.total.amount,
             id: item.listing.id,
             quote: item.pricingQuote,
             superhost: item.listing.isSuperhost,

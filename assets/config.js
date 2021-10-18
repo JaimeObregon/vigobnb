@@ -73,8 +73,18 @@ export const config = {
         {
             id: 'price',
             class: 'number price',
-            title: 'Precio',
+            title: 'Noche',
             template: property => `${property.price} €`,
+            sort: {
+                ascending: (a, b) => a['price'] - b['price'],
+                descending: (a, b) => b['price'] - a['price'],
+            },
+        },
+        {
+            id: 'total',
+            class: 'number price',
+            title: 'Total',
+            template: property => `${property.total} €`,
             sort: {
                 ascending: (a, b) => a['price'] - b['price'],
                 descending: (a, b) => b['price'] - a['price'],
@@ -120,5 +130,15 @@ export const config = {
                 descending: (a, b) => b['id'] - a['id'],
             },
         },
+        // {
+        //     id: 'url',
+        //     class: 'hidden',
+        //     title: 'Enlace',
+        //     template: property => `https://www.airbnb.es/rooms/${property.id}`,
+        //     sort: {
+        //         ascending: (a, b) => a['url'] - b['url'],
+        //         descending: (a, b) => b['url'] - a['url'],
+        //     },
+        // },
     ],
 }

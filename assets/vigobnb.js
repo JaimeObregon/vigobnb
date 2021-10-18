@@ -31,6 +31,7 @@ const error = message => `
 `
 
 let properties
+let rows
 
 const refresh = debounce(350, async () => {
     table.innerHTML = [...Array(5)].map(row => `
@@ -76,7 +77,7 @@ const refresh = debounce(350, async () => {
     properties = json
         .filter((value, index, array) => array.findIndex(item => (item.id === value.id)) === index)
 
-    const rows = (order, direction) => properties
+    rows = (order, direction) => properties
         .sort(columns.find(column => column.id === order).sort[direction])
         .map(property => `
             <bx-table-expand-row>

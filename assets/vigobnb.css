@@ -132,7 +132,7 @@ button {
 }
 
 button svg {
-    width: 5em;
+    width: 4em;
 }
 
 @supports (font-variation-settings: normal) {
