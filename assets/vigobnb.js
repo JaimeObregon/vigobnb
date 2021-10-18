@@ -10,8 +10,8 @@ const formatDate = (locale, date) => new Date(date)
         year: 'numeric',
     })
 
-const fourWeeksFromNow = new Date(new Date().setDate(new Date().getDate() + 4 * 7))
-const fiveWeeksFromNow = new Date(new Date().setDate(new Date().getDate() + 5 * 7))
+const fourWeeksFromNow = formatDate('en-CA', new Date().setDate(new Date().getDate() + 4 * 7))
+const fiveWeeksFromNow = formatDate('en-CA', new Date().setDate(new Date().getDate() + 5 * 7))
 
 const defaults = {
     from: fourWeeksFromNow,
