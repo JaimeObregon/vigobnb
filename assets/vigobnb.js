@@ -85,13 +85,18 @@ const refresh = debounce(350, async () => {
                 `).join('')}
             </bx-table-expand-row>
             <bx-table-expanded-row colspan="${columns.length + 1}">
-                <pre style="width: calc(100vw - var(--nav-width) - 2.5em); overflow: scroll">${JSON.stringify({
-                    id: property.id,
-                    superhost: property.superhost,
-                    new: property.new,
-                    pictures: property.pictures,
-                    quote: property.quote,
-                }, null, 4)}</pre>
+                <div class="gallery">
+                    ${property.pictures.map(picture => `<img src="${picture}" alt=""/>`).join('')}
+                </div>
+                <dl>
+                    <dt>Identificador:</dt>
+                    <dd><code>${property.id}</code></dd>
+                    <dt>Superanfitrión:</dt>
+                    <dd>${property.superhost ? 'Sí' : 'No'}</dd>
+                    <dt>Nuevo:</dt>
+                    <dd>${property.new ? 'Sí' : 'No'}</dd>
+                </dl>
+                <pre>${JSON.stringify(property.quote, null, 4)}</pre>
             </bx-table-expanded-row>
         `)
         .join('')

@@ -44,6 +44,7 @@ bx-table-cell.details img {
     height: 6em;
     object-fit: cover;
     flex-shrink: 0;
+    border-radius: .25em;
 }
 
 bx-table[compact] bx-table-cell.details img {
@@ -69,6 +70,42 @@ bx-table-cell.details ul li {
 bx-table-cell.details ul li:not(:last-of-type):after {
     content: '·';
     margin: 0 .25em;
+}
+
+dl {
+    display: flex;
+    margin-left: 2em;
+}
+
+dl dt {
+    margin: 0 1em 0 0;
+    font-weight: 100;
+}
+
+dl dd {
+    margin: 0 4em 0 0;
+    font-weight: 600;
+}
+
+div.gallery {
+    display: flex;
+    margin: 0 -.5em 0 1.5em;
+}
+
+div.gallery img {
+    height: 10em;
+    width: calc(100% / 6);
+    object-fit: cover;
+    flex-shrink: 0;
+    padding: .5em;
+    box-sizing: border-box;
+    border-radius: .75em;
+}
+
+pre {
+    margin: 0 0 0 2em;
+    width: calc(100vw - var(--nav-width) - 3.75rem);
+    overflow: scroll;
 }
 
 div.empty {
