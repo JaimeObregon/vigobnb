@@ -1,53 +1,68 @@
-import { config } from '/assets/config.js'
+import { config } from "/assets/config.js";
 
-const { columns } = config
-const { debounce } = throttleDebounce
+const { columns } = config;
+const { debounce } = throttleDebounce;
 
-const formatDate = (locale, date) => new Date(date)
-    .toLocaleString(locale, {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',
-    })
+const formatDate = (locale, date) =>
+    new Date(date).toLocaleString(locale, {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+    });
 
-const fourWeeksFromNow = formatDate('en-CA', new Date().setDate(new Date().getDate() + 4 * 7))
-const fiveWeeksFromNow = formatDate('en-CA', new Date().setDate(new Date().getDate() + 5 * 7))
+const fourWeeksFromNow = formatDate(
+    "en-CA",
+    new Date().setDate(new Date().getDate() + 4 * 7)
+);
+const fiveWeeksFromNow = formatDate(
+    "en-CA",
+    new Date().setDate(new Date().getDate() + 5 * 7)
+);
 
 const defaults = {
     from: fourWeeksFromNow,
     to: fiveWeeksFromNow,
-    propertyTypes: '1',
+    propertyTypes: "1",
     adults: 2,
     compact: true,
-}
+};
 
-const error = message => `
+const error = (message) => `
     <bx-table-expanded-row colspan="${columns.length + 1}" expanded>
         <div class="empty">
             <img src="/assets/ooops.svg" alt="Ooops!!!" />
             ${message}
         </div>
     </bx-table-expanded-row>
-`
+`;
 
-let properties
-let rows
+let properties;
+let rows;
 
 const refresh = debounce(350, async () => {
-    table.innerHTML = [...Array(5)].map(row => `
+    table.innerHTML = [...Array(5)]
+        .map(
+            (row) => `
         <bx-table-expand-row>
-            ${columns.map(column => `<bx-table-cell-skeleton></bx-table-cell-skeleton>`).join('')}
+            ${columns
+                .map(
+                    (column) =>
+                        `<bx-table-cell-skeleton></bx-table-cell-skeleton>`
+                )
+                .join("")}
         </bx-table-expand-row>
-    `).join('')
+    `
+        )
+        .join("");
 
-    const params = new URLSearchParams()
-    params.append('checkin', controls.dates.value.split('/')[0])
-    params.append('checkout', controls.dates.value.split('/')[1])
-    params.append('adults', controls.adults.value)
-    params.append('propertyTypeId', controls.types.value)
-    const query = params.toString()
+    const params = new URLSearchParams();
+    params.append("checkin", controls.dates.value.split("/")[0]);
+    params.append("checkout", controls.dates.value.split("/")[1]);
+    params.append("adults", controls.adults.value);
+    params.append("propertyTypeId", controls.types.value);
+    const query = params.toString();
 
-    const response = await fetch(`/.netlify/functions/airbnb-fetch?${query}`)
+    const response = await fetch(`/.netlify/functions/airbnb-fetch?${query}`);
 
     if (!response.ok) {
         table.innerHTML = error(`
@@ -55,13 +70,13 @@ const refresh = debounce(350, async () => {
             <p>
                 Algo ha salido mal y no ha sido posible conectar<br>
                 con el servidor o con la API de Airbnb.<br>
-                Prueba a intentarlo de nuevo.
+                Prueba a intentarlo de nuevo pasados unos minutos.
             </p>
-        `)
-        return
+        `);
+        return;
     }
 
-    const json = await response.json()
+    const json = await response.json();
 
     if (!json.length) {
         table.innerHTML = error(`
@@ -70,66 +85,92 @@ const refresh = debounce(350, async () => {
                 Parece que no hay propiedades para tu búsqueda.<br>
                 Prueba con otras fechas o cambiando los filtros.
             </p>
-        `)
-        return
+        `);
+        return;
     }
 
-    properties = json
-        .filter((value, index, array) => array.findIndex(item => (item.id === value.id)) === index)
+    properties = json.filter(
+        (value, index, array) =>
+            array.findIndex((item) => item.id === value.id) === index
+    );
 
-    rows = (order, direction) => properties
-        .sort(columns.find(column => column.id === order).sort[direction])
-        .map(property => `
+    rows = (order, direction) =>
+        properties
+            .sort(columns.find((column) => column.id === order).sort[direction])
+            .map(
+                (property) => `
             <bx-table-expand-row>
-                ${columns.map(column => `
+                ${columns
+                    .map(
+                        (column) => `
                     <bx-table-cell class="${column.class}">
                         ${column.template(property)}
                     </bx-table-cell>
-                `).join('')}
+                `
+                    )
+                    .join("")}
             </bx-table-expand-row>
             <bx-table-expanded-row colspan="${columns.length + 1}">
                 <div class="gallery">
-                    ${property.pictures.map(picture => `<img src="${picture}" alt=""/>`).join('')}
+                    ${property.pictures
+                        .map((picture) => `<img src="${picture}" alt=""/>`)
+                        .join("")}
                 </div>
                 <dl>
                     <dt>Superanfitrión:</dt>
-                    <dd>${property.superhost ? 'Sí' : 'No'}</dd>
+                    <dd>${property.superhost ? "Sí" : "No"}</dd>
                     <dt>Nuevo:</dt>
-                    <dd>${property.new ? 'Sí' : 'No'}</dd>
+                    <dd>${property.new ? "Sí" : "No"}</dd>
                 </dl>
                 <pre>${JSON.stringify(property.quote, null, 4)}</pre>
             </bx-table-expanded-row>
-        `)
-        .join('')
+        `
+            )
+            .join("");
 
-    table.innerHTML = rows('price', 'descending')
-})
+    table.innerHTML = rows("price", "descending");
+});
 
 document.body.innerHTML = `
     <bx-side-nav>
         <img src="/assets/anfitriona.png" alt="Anfitriona">
 
-        <bx-date-picker date-format="d/m/Y" value="${defaults.from}/${defaults.to}">
-            <bx-date-picker-input value="${formatDate('es-ES', defaults.from)}" kind="from" label-text="Fecha de entrada">
+        <bx-date-picker date-format="d/m/Y" value="${defaults.from}/${
+    defaults.to
+}">
+            <bx-date-picker-input value="${formatDate(
+                "es-ES",
+                defaults.from
+            )}" kind="from" label-text="Fecha de entrada">
             </bx-date-picker-input>
-            <bx-date-picker-input value="${formatDate('es-ES', defaults.to)}" kind="to" label-text="Fecha de salida">
+            <bx-date-picker-input value="${formatDate(
+                "es-ES",
+                defaults.to
+            )}" kind="to" label-text="Fecha de salida">
             </bx-date-picker-input>
         </bx-date-picker>
 
-        <bx-number-input value="${defaults.adults}" placeholder="Optional placeholder text" min="1" max="20" type="text">
+        <bx-number-input value="${
+            defaults.adults
+        }" placeholder="Optional placeholder text" min="1" max="20" type="text">
             <span slot="label-text">Huéspedes</span>
         </bx-number-input>
 
-        <bx-multi-select value="${defaults.propertyTypes}" label-text="Tipo de alojamiento" trigger-content="Selecciona tipos">
+        <bx-multi-select value="${
+            defaults.propertyTypes
+        }" label-text="Tipo de alojamiento" trigger-content="Selecciona tipos">
             ${config.propertyTypes
-                .map(type => `
+                .map(
+                    (type) => `
                     <bx-multi-select-item value="${type.id}">
                         ${type.name}
                     </bx-multi-select-item>
-                `).join('')}
+                `
+                )
+                .join("")}
         </bx-multi-select>
 
-        <bx-toggle ${defaults.compact ? '' : 'checked=""'}>
+        <bx-toggle ${defaults.compact ? "" : 'checked=""'}>
             <span slot="checked-text">Mostrar fotografías</span>
             <span slot="unchecked-text">Ocultar fotografías</span>
         </bx-toggle>
@@ -146,65 +187,73 @@ document.body.innerHTML = `
             <bx-table-head>
                 <bx-table-header-row>
                     <bx-table-header-cell></bx-table-header-cell>
-                    ${columns.map(column => `
+                    ${columns
+                        .map(
+                            (column) => `
                         <bx-table-header-cell data-id="${column.id}" class="${column.class}" sort-direction="none" sort-cycle="bi-states-from-ascending">
                             ${column.title}
                         </bx-table-header-cell>
-                    `).join('')}
+                    `
+                        )
+                        .join("")}
                 </bx-table-header-row>
             </bx-table-head>
             <bx-table-body>
             </bx-table-body>
         </bx-table>
     </bx-data-table>
-`
+`;
 
 const controls = {
-    dates: document.querySelector('bx-date-picker'),
-    adults: document.querySelector('bx-number-input'),
-    types: document.querySelector('bx-multi-select'),
-}
-const table = document.querySelector('bx-table-body')
+    dates: document.querySelector("bx-date-picker"),
+    adults: document.querySelector("bx-number-input"),
+    types: document.querySelector("bx-multi-select"),
+};
+const table = document.querySelector("bx-table-body");
 
-document.addEventListener('bx-table-header-cell-sort', event => {
-    const column = event.target.dataset.id
-    const direction = event.detail.sortDirection
-    const headers = document.querySelectorAll('bx-table-header-cell')
+document.addEventListener("bx-table-header-cell-sort", (event) => {
+    const column = event.target.dataset.id;
+    const direction = event.detail.sortDirection;
+    const headers = document.querySelectorAll("bx-table-header-cell");
 
-    table.innerHTML = rows(column, direction)
-    headers.forEach(header => header.setAttribute('sort-direction', 'none'))
-})
+    table.innerHTML = rows(column, direction);
+    headers.forEach((header) => header.setAttribute("sort-direction", "none"));
+});
 
-document.querySelector('bx-toggle').addEventListener('bx-toggle-changed', event => {
-    const value = Boolean(event.target.checked)
-    document.querySelector('bx-table').toggleAttribute('compact', !value)
-})
+document
+    .querySelector("bx-toggle")
+    .addEventListener("bx-toggle-changed", (event) => {
+        const value = Boolean(event.target.checked);
+        document.querySelector("bx-table").toggleAttribute("compact", !value);
+    });
 
-document.querySelector('button').addEventListener('click', event => {
+document.querySelector("button").addEventListener("click", (event) => {
     const csv = [
         columns
-            .map(column => column.title)
-            .map(field => `"${field}"`)
-            .join(','),
-        ...properties
-            .map(row => columns.map(column => row[column.id])
-            .map(String)
-            .map(field => field.replace(/^null$/, ''))
-            .map(field => field.replaceAll('"', '""'))
-            .map(field => `"${field}"`)
-            .join(',')),
-    ].join('\r\n')
+            .map((column) => column.title)
+            .map((field) => `"${field}"`)
+            .join(","),
+        ...properties.map((row) =>
+            columns
+                .map((column) => row[column.id])
+                .map(String)
+                .map((field) => field.replace(/^null$/, ""))
+                .map((field) => field.replaceAll('"', '""'))
+                .map((field) => `"${field}"`)
+                .join(",")
+        ),
+    ].join("\r\n");
 
-    const uri = encodeURI(`data:text/csv;charset=utf-8,${csv}`)
-    window.open(uri)
-})
+    const uri = encodeURI(`data:text/csv;charset=utf-8,${csv}`);
+    window.open(uri);
+});
 
-controls.adults.addEventListener('bx-number-input', refresh)
+controls.adults.addEventListener("bx-number-input", refresh);
 
-controls.types.addEventListener('bx-multi-select-selected', refresh)
+controls.types.addEventListener("bx-multi-select-selected", refresh);
 
-controls.dates.addEventListener('bx-date-picker-changed', event => {
-    event.detail.selectedDates.length === 2 && refresh()
-})
+controls.dates.addEventListener("bx-date-picker-changed", (event) => {
+    event.detail.selectedDates.length === 2 && refresh();
+});
 
-refresh()
+refresh();

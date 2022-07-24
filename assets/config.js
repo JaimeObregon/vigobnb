@@ -2,19 +2,19 @@ export const config = {
     propertyTypes: [
         {
             id: 47,
-            name: 'Apartamento con servicios',
+            name: "Apartamento con servicios",
         },
         {
             id: 37,
-            name: 'Apartamento en complejo residencial',
+            name: "Apartamento en complejo residencial",
         },
         {
             id: 1,
-            name: 'Apartamento',
+            name: "Apartamento",
         },
         {
             id: 35,
-            name: 'Loft',
+            name: "Loft",
         },
         // {
         //     id: 36,
@@ -51,83 +51,86 @@ export const config = {
     ],
     columns: [
         {
-            id: 'name',
-            class: 'details',
-            title: 'Descripción',
-            template: property => `
+            id: "name",
+            class: "details",
+            title: "Descripción",
+            template: (property) => `
                 <img src="${property.pictures[0]}" alt="" />
                 <div>
                     <a href="https://www.airbnb.es/rooms/${property.id}">
                         ${property.name}
                     </a>
                     <ul>
-                        ${property.details.map(detail => `<li>${detail}</li>`).join('')}
+                        ${property.details
+                            .map((detail) => `<li>${detail}</li>`)
+                            .join("")}
                     </ul>
                 </div>
                 `,
             sort: {
-                ascending: (a, b) => a['name'].localeCompare(b['name']),
-                descending: (a, b) => b['name'].localeCompare(a['name']),
+                ascending: (a, b) => a["name"].localeCompare(b["name"]),
+                descending: (a, b) => b["name"].localeCompare(a["name"]),
             },
         },
         {
-            id: 'price',
-            class: 'number price',
-            title: 'Noche',
-            template: property => `${property.price} €`,
+            id: "price",
+            class: "number price",
+            title: "Noche",
+            template: (property) => property.price ?? "",
             sort: {
-                ascending: (a, b) => a['price'] - b['price'],
-                descending: (a, b) => b['price'] - a['price'],
+                ascending: (a, b) => a["price"] - b["price"],
+                descending: (a, b) => b["price"] - a["price"],
             },
         },
         {
-            id: 'total',
-            class: 'number price',
-            title: 'Total',
-            template: property => `${property.total} €`,
+            id: "total",
+            class: "number price",
+            title: "Total",
+            template: (property) => property.total.replace(/^en total$/, ""),
             sort: {
-                ascending: (a, b) => a['price'] - b['price'],
-                descending: (a, b) => b['price'] - a['price'],
+                ascending: (a, b) => a["price"] - b["price"],
+                descending: (a, b) => b["price"] - a["price"],
             },
         },
         {
-            id: 'rating',
-            class: 'number',
-            title: 'Valoración',
-            template: property => property.rating ? property.rating.toLocaleString('es-ES') : '',
+            id: "rating",
+            class: "number",
+            title: "Valoración",
+            template: (property) =>
+                property.rating ? property.rating.toLocaleString("es-ES") : "",
             sort: {
-                ascending: (a, b) => a['rating'] - b['rating'],
-                descending: (a, b) => b['rating'] - a['rating'],
+                ascending: (a, b) => a["rating"] - b["rating"],
+                descending: (a, b) => b["rating"] - a["rating"],
             },
         },
         {
-            id: 'capacity',
-            class: 'number',
-            title: 'Capacidad',
-            template: property => property.capacity,
+            id: "capacity",
+            class: "number",
+            title: "Capacidad",
+            template: (property) => property.capacity,
             sort: {
-                ascending: (a, b) => a['capacity'] - b['capacity'],
-                descending: (a, b) => b['capacity'] - a['capacity'],
+                ascending: (a, b) => a["capacity"] - b["capacity"],
+                descending: (a, b) => b["capacity"] - a["capacity"],
             },
         },
         {
-            id: 'reviews',
-            class: 'number',
-            title: 'Reseñas',
-            template: property => property.reviews,
+            id: "reviews",
+            class: "number",
+            title: "Reseñas",
+            template: (property) => property.reviews,
             sort: {
-                ascending: (a, b) => a['reviews'] - b['reviews'],
-                descending: (a, b) => b['reviews'] - a['reviews'],
+                ascending: (a, b) => a["reviews"] - b["reviews"],
+                descending: (a, b) => b["reviews"] - a["reviews"],
             },
         },
         {
-            id: 'id',
-            class: 'id',
-            title: 'id',
-            template: property => `<code>${property.id}</code>`,
+            id: "id",
+            class: "id",
+            title: "id",
+            template: (property) => `<code>${property.id}</code>`,
             sort: {
-                ascending: (a, b) => a['id'] - b['id'],
-                descending: (a, b) => b['id'] - a['id'],
+                ascending: (a, b) => a["id"] - b["id"],
+                descending: (a, b) => b["id"] - a["id"],
             },
         },
         // {
@@ -141,4 +144,4 @@ export const config = {
         //     },
         // },
     ],
-}
+};
