@@ -45,10 +45,7 @@ const refresh = debounce(350, async () => {
             (row) => `
         <bx-table-expand-row>
             ${columns
-                .map(
-                    (column) =>
-                        `<bx-table-cell-skeleton></bx-table-cell-skeleton>`
-                )
+                .map(() => `<bx-table-cell-skeleton></bx-table-cell-skeleton>`)
                 .join("")}
         </bx-table-expand-row>
     `

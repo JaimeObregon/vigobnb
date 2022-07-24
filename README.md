@@ -4,7 +4,7 @@ Un amigo opera varios apartamentos turísticos en Vigo. Él se ha portado muy bi
 
 Vigobnb conecta con Airbnb, obtiene y presenta los precios de los alojamientos turísticos en la ciudad de Vigo y alrededores. También permite descargarlos en formato CSV. Esto es útil para entender cómo está el fluctuante mercado del alojamiento turístico en un momento y lugar dados. Y utilizar ese conocimiento para establecer unos precios propios competitivos en este mercado ([inteligencia competitiva](https://en.wikipedia.org/wiki/Competitive_intelligence)).
 
-El sitio [está desplegado](https://vigobnb.netlify.app) en línea.
+El sitio [está desplegado](https://vigobnb.netlify.app) en Netlify. Para desarrollar, [instala la interfaz de línea de comandos de Netlify](https://docs.netlify.com/cli/get-started/) e inicia el entorno con el comando `netlify dev`.
 
 ![Captura de pantalla](screenshot.png)
 

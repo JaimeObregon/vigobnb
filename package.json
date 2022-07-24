@@ -1,23 +1,23 @@
 {
-  "name": "vigobnb",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "netlify dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JaimeObregon/vigobnb.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JaimeObregon/vigobnb/issues"
-  },
-  "homepage": "https://github.com/JaimeObregon/vigobnb#readme",
-  "dependencies": {
-    "node-fetch": "^2.6.5"
-  }
+    "name": "vigobnb",
+    "version": "1.0.0",
+    "description": "Vigobnb conecta con Airbnb, obtiene y presenta los precios de los alojamientos turísticos en un lugar dado.",
+    "main": "index.js",
+    "scripts": {
+        "dev": "netlify dev",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JaimeObregon/vigobnb.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/JaimeObregon/vigobnb/issues"
+    },
+    "homepage": "https://github.com/JaimeObregon/vigobnb#readme",
+    "dependencies": {
+        "node-fetch": "^2.6.5"
+    }
 }
