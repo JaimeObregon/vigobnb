@@ -105,7 +105,6 @@ const handler = async (event) => {
                     ...variables.exploreRequest,
                     adults: Number(adults),
                     query,
-                    // placeId: "ChIJKYOZ6mqKJQ0RkBjLc4L1BAQ",
                     propertyTypeId: [
                         ...propertyTypeId.split(",").map((id) => Number(id)),
                     ],
