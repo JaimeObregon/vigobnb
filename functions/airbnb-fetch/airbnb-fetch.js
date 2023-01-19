@@ -20,7 +20,6 @@ const variables = {
         flexibleTripDates: ["november", "october"],
         flexibleTripLengths: ["weekend_trip"],
         datePickerType: "calendar",
-        placeId: "ChIJKYOZ6mqKJQ0RkBjLc4L1BAQ",
         source: "structured_search_input_header",
         searchType: "filter_change",
         roomTypes: [
@@ -106,6 +105,7 @@ const handler = async (event) => {
                     ...variables.exploreRequest,
                     adults: Number(adults),
                     query,
+                    // placeId: "ChIJKYOZ6mqKJQ0RkBjLc4L1BAQ",
                     propertyTypeId: [
                         ...propertyTypeId.split(",").map((id) => Number(id)),
                     ],
