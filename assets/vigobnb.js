@@ -57,6 +57,7 @@ const refresh = debounce(350, async () => {
     params.append("checkout", controls.dates.value.split("/")[1]);
     params.append("adults", controls.adults.value);
     params.append("propertyTypeId", controls.types.value);
+    params.append("query", controls.location.value);
     const query = params.toString();
 
     const response = await fetch(`/.netlify/functions/airbnb-fetch?${query}`);
@@ -132,6 +133,11 @@ document.body.innerHTML = `
     <bx-side-nav>
         <img src="/assets/anfitriona.png" alt="Anfitriona">
 
+        <bx-content-switcher value="Vigo, Pontevedra">
+            <bx-content-switcher-item value="Vigo, Pontevedra">Vigo</bx-content-switcher-item>
+            <bx-content-switcher-item value="Ourense, Ourense">Ourense</bx-content-switcher-item>
+        </bx-content-switcher>
+
         <bx-date-picker date-format="d/m/Y" value="${defaults.from}/${
     defaults.to
 }">
@@ -205,6 +211,7 @@ const controls = {
     dates: document.querySelector("bx-date-picker"),
     adults: document.querySelector("bx-number-input"),
     types: document.querySelector("bx-multi-select"),
+    location: document.querySelector("bx-content-switcher"),
 };
 const table = document.querySelector("bx-table-body");
 
@@ -246,9 +253,8 @@ document.querySelector("button").addEventListener("click", (event) => {
 });
 
 controls.adults.addEventListener("bx-number-input", refresh);
-
 controls.types.addEventListener("bx-multi-select-selected", refresh);
-
+controls.location.addEventListener("bx-content-switcher-selected", refresh);
 controls.dates.addEventListener("bx-date-picker-changed", (event) => {
     event.detail.selectedDates.length === 2 && refresh();
 });
