@@ -18,6 +18,6 @@
     },
     "homepage": "https://github.com/JaimeObregon/vigobnb#readme",
     "dependencies": {
-        "node-fetch": "^2.6.5"
+        "node-fetch": "^2.7.0"
     }
 }
